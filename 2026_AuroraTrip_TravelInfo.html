@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>2026 白馬極光行 (v2.0)</title>
+    <title>2026 白馬極光行</title>
     <style>
         :root {
             --bg-dark: #0f172a;
@@ -47,29 +47,58 @@
 			background-repeat: no-repeat;
 		}
         /* Header & Countdown */
-        header {
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-		/* 修改標題樣式 */
-		h1 {
-			font-size: 1.8rem;
-			background: linear-gradient(90deg, #fff, var(--accent), #fff);
+		/* --- 標題區塊優化 --- */
+		#header {
+			position: relative;
+			top: 0;
+			z-index: 1000;
+			background: rgba(15, 23, 42, 0.5); /* 深色半透明背景 */
+			backdrop-filter: blur(10px); /* 毛玻璃效果 */
+			padding: 15px 20px 10px; /* 調整內距 */
+			text-align: center;
+			border-bottom: 1px solid rgba(56, 189, 248, 0.2); /* 底部增加一條淡淡的藍線 */
+			box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+		}
+
+		/* 主標題設計 */
+		#header h1 {
+			margin: 0;
+			font-size: 1.8rem; /* 字體加大 */
+			font-weight: 800;
+			letter-spacing: 1px;
+			
+			/* 文字漸層色 (金黃色漸層) */
+			background: linear-gradient(to right, #fbbf24, #f59e0b); 
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
-			margin: 0 0 10px 0;
 			
-			/* 新增這一行：讓標題置中 */
-			text-align: center;
+			/* 發光文字陰影 (讓標題更清楚) */
+			filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
 		}
-        .subtitle { font-size: 0.9rem; color: var(--text-sub); margin-top: 5px; }
-        .countdown { 
-            margin-top: 10px; font-size: 0.85rem; 
-            background: rgba(255,255,255,0.1); display: inline-block; 
-            padding: 4px 12px; border-radius: 20px; color: var(--highlight);
-        }
+
+		/* 副標題設計 */
+		.header-subtitle {
+			font-size: 0.9rem;
+			color: var(--accent); /* 極光藍 */
+			margin-top: 5px;
+			text-transform: uppercase; /* 全大寫 */
+			letter-spacing: 2px; /* 字元間距加大 */
+			font-weight: 500;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+		}
+
+		/* 裝飾線條 */
+		.header-subtitle::before,
+		.header-subtitle::after {
+			content: "";
+			display: block;
+			width: 30px;
+			height: 1px;
+			background: linear-gradient(90deg, transparent, var(--accent), transparent);
+		}
 
         /* Sticky Navigation */
         .nav-bar {
@@ -513,8 +542,11 @@
 <body>
 
 <div id="header">
-    <h1>2026 白馬極光行 Aurora Trip</h1>    
-    <div class="countdown-container">
+		<h1>❄️ 2026 白馬極光行 ❄️</h1>    
+		<div class="header-subtitle">Aurora Trip • Yukon</div>
+		<div id="countdown-display" style="margin-top: 10px;">
+        </div>
+		<div class="countdown-container">
         <div class="countdown-info">
             <span id="countdown-text">計算中...</span>
             <span id="countdown-percent">0%</span>
