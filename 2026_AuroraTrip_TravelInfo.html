@@ -537,6 +537,89 @@
 			transition: left 1s cubic-bezier(0.4, 0, 0.2, 1);
 			filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
 		}		
+		/* --- 航班追蹤按鈕樣式 --- */
+		.track-btn {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); /* 專業的航空藍漸層 */
+			color: white;
+			text-decoration: none;
+			padding: 8px 16px;
+			border-radius: 20px;
+			font-size: 0.85rem;
+			font-weight: 600;
+			margin-top: 12px;
+			transition: all 0.3s ease;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+			border: none;
+		}
+
+		.track-btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 15px rgba(14, 165, 233, 0.4);
+			filter: brightness(1.1);
+		}
+
+		.track-btn svg {
+			width: 16px;
+			height: 16px;
+		}
+		/* --- 航班即時進度條 --- */
+		.flight-live-status {
+			margin: 15px 0;
+			padding: 10px;
+			background: rgba(0, 0, 0, 0.2);
+			border-radius: 8px;
+		}
+
+		.progress-track {
+			position: relative;
+			width: 100%;
+			height: 4px;
+			background: rgba(255, 255, 255, 0.1);
+			border-radius: 2px;
+			margin: 20px 0 10px 0;
+		}
+
+		.progress-fill {
+			position: absolute;
+			height: 100%;
+			background: var(--accent); /* 極光藍 */
+			width: 0%; /* 由 JS 控制 */
+			border-radius: 2px;
+			box-shadow: 0 0 10px var(--accent);
+		}
+
+		.plane-icon-marker {
+			position: absolute;
+			top: -18px;
+			left: 0%; /* 由 JS 控制 */
+			transform: translateX(-50%) rotate(0deg);
+			font-size: 25px;
+			color: var(--accent);
+			text-shadow: 0 0 5px rgba(0,0,0,1);
+			transition: left 1s linear;
+			z-index: 2;
+		}
+
+		.status-text {
+			display: flex;
+			justify-content: space-between;
+			font-size: 0.75rem;
+			color: var(--text-sub);
+		}
+
+		.flying-tag {
+			font-size: 0.7rem;
+			padding: 2px 6px;
+			border-radius: 4px;
+			background: #10b981; /* 飛行中顯示綠色 */
+			color: white;
+			margin-bottom: 5px;
+			display: inline-block;
+		}
     </style>
 </head>
 <body>
@@ -583,8 +666,20 @@
 
     <div id="flight" class="section-title">航班資訊 Flights</div>
 <div class="card">
-        
         <div class="flight-ticket">
+			<div class="flight-live-status" 
+				 id="flight-KE2022" 
+				 data-dep="2026/02/11 12:25" 
+				 data-arr="2026/02/11 14:50"> <div id="status-tag-KE2022" class="flying-tag" style="display:none;">飛行中</div>				
+				<div class="progress-track">
+					<div id="fill-KE2022" class="progress-fill"></div>
+					<div id="plane-KE2022" class="plane-icon-marker">✈</div>
+				</div>				
+				<div class="status-text">
+					<span id="time-elapsed-KE2022">尚未起飛</span>
+					<span id="time-remaining-KE2022"></span>
+				</div>
+			</div>
             <div class="route-row">
                 <div class="airport">🛫TPE</div>
                 <div class="flight-path">
@@ -597,9 +692,29 @@
                 <div class="flight-date">02/11</div>
                 <div class="time">15:50</div>
             </div>
+			<a href="https://www.flightradar24.com/KE2022/" target="_blank" class="track-btn">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.7.5-1.1z"></path>
+				</svg>
+				即時航班追蹤 (Flightradar24)
+			</a>
+			
         </div>
 
         <div class="flight-ticket">
+			<div class="flight-live-status" 
+				 id="flight-KE71" 
+				 data-dep="2026/02/11 17:30" 
+				 data-arr="2026/02/12 03:15"> <div id="status-tag-KE71" class="flying-tag" style="display:none;">飛行中</div>				
+				<div class="progress-track">
+					<div id="fill-KE71" class="progress-fill"></div>
+					<div id="plane-KE71" class="plane-icon-marker">✈</div>
+				</div>				
+				<div class="status-text">
+					<span id="time-elapsed-KE71">尚未起飛</span>
+					<span id="time-remaining-KE71"></span>
+				</div>
+			</div>
             <div class="route-row">
                 <div class="airport">🛫ICN</div>
                 <div class="flight-path">
@@ -612,10 +727,29 @@
                 <div class="flight-date">02/11</div>
                 <div class="time">11:15</div>
             </div>
+			<a href="https://www.flightradar24.com/KE71/" target="_blank" class="track-btn">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.7.5-1.1z"></path>
+				</svg>
+				即時航班追蹤 (Flightradar24)
+			</a>
         </div>
 
         <div class="flight-ticket">
-            <div class="route-row">
+			<div class="flight-live-status" 
+				 id="flight-4N530" 
+				 data-dep="2026/02/13 04:45" 
+				 data-arr="2026/02/13 07:10"> <div id="status-tag-4N530" class="flying-tag" style="display:none;">飛行中</div>				
+				<div class="progress-track">
+					<div id="fill-4N530" class="progress-fill"></div>
+					<div id="plane-4N530" class="plane-icon-marker">✈</div>
+				</div>				
+				<div class="status-text">
+					<span id="time-elapsed-4N530">尚未起飛</span>
+					<span id="time-remaining-4N530"></span>
+				</div>
+			</div>            
+			<div class="route-row">
                 <div class="airport">🛫YVR</div>
                 <div class="flight-path">
                     <span class="flight-no">4N530</span>
@@ -627,10 +761,29 @@
                 <div class="flight-date">02/13</div>
                 <div class="time">16:10</div>
             </div>
+			<a href="https://www.flightradar24.com/4N530/" target="_blank" class="track-btn">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.7.5-1.1z"></path>
+				</svg>
+				即時航班追蹤 (Flightradar24)
+			</a>
         </div>
 
         <div class="flight-ticket">
-            <div class="route-row">
+			<div class="flight-live-status" 
+				 id="flight-4N573" 
+				 data-dep="2026/02/18 08:30" 
+				 data-arr="2026/02/18 10:45"> <div id="status-tag-4N573" class="flying-tag" style="display:none;">飛行中</div>				
+				<div class="progress-track">
+					<div id="fill-4N573" class="progress-fill"></div>
+					<div id="plane-4N573" class="plane-icon-marker">✈</div>
+				</div>				
+				<div class="status-text">
+					<span id="time-elapsed-4N573">尚未起飛</span>
+					<span id="time-remaining-4N573"></span>
+				</div>
+			</div>              
+			<div class="route-row">
                 <div class="airport">🛫YXY</div>
                 <div class="flight-path">
                     <span class="flight-no">4N573</span>
@@ -642,10 +795,29 @@
                 <div class="flight-date">02/17</div>
                 <div class="time">18:45</div>
             </div>
+			<a href="https://www.flightradar24.com/4N573/" target="_blank" class="track-btn">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.7.5-1.1z"></path>
+				</svg>
+				即時航班追蹤 (Flightradar24)
+			</a>			
         </div>
 
         <div class="flight-ticket">
-            <div class="route-row">
+			<div class="flight-live-status" 
+				 id="flight-KE76" 
+				 data-dep="2026/02/21 16:10" 
+				 data-arr="2026/02/22 04:00"> <div id="status-tag-KE76" class="flying-tag" style="display:none;">飛行中</div>				
+				<div class="progress-track">
+					<div id="fill-KE76" class="progress-fill"></div>
+					<div id="plane-KE76" class="plane-icon-marker">✈</div>
+				</div>				
+				<div class="status-text">
+					<span id="time-elapsed-KE76">尚未起飛</span>
+					<span id="time-remaining-KE76"></span>
+				</div>
+			</div>              
+			<div class="route-row">
                 <div class="airport">🛫YVR</div>
                 <div class="flight-path">
                     <span class="flight-no">KE 076</span>
@@ -660,10 +832,29 @@
 					<span style="position: absolute; top: -6px; right: -15px; font-size:0.7rem; color:#fbbf24;">+1</span>
 				</div>
 			</div>
+			<a href="https://www.flightradar24.com/KE76/" target="_blank" class="track-btn">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.7.5-1.1z"></path>
+				</svg>
+				即時航班追蹤 (Flightradar24)
+			</a>				
         </div>
 
         <div class="flight-ticket">
-            <div class="route-row">
+			<div class="flight-live-status" 
+				 id="flight-KE2021" 
+				 data-dep="2026/02/22 08:00" 
+				 data-arr="2026/02/22 11:00"> <div id="status-tag-KE2021" class="flying-tag" style="display:none;">飛行中</div>				
+				<div class="progress-track">
+					<div id="fill-KE2021" class="progress-fill"></div>
+					<div id="plane-KE2021" class="plane-icon-marker">✈</div>
+				</div>				
+				<div class="status-text">
+					<span id="time-elapsed-KE2021">尚未起飛</span>
+					<span id="time-remaining-KE2021"></span>
+				</div>
+			</div>             
+			<div class="route-row">
                 <div class="airport">🛫ICN</div>
                 <div class="flight-path">
                     <span class="flight-no">KE 2021</span>
@@ -675,6 +866,12 @@
                 <div class="flight-date">02/22</div>
                 <div class="time">11:00</div>
             </div>
+			<a href="https://www.flightradar24.com/KE2021/" target="_blank" class="track-btn">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.7.5-1.1z"></path>
+				</svg>
+				即時航班追蹤 (Flightradar24)
+			</a>	
         </div>
 	
     </div>
@@ -1256,6 +1453,61 @@
             }
         });
     });
+	function updateFlightProgress() {
+    // 找出所有帶有 flight-live-status 的區塊
+    const flights = document.querySelectorAll('.flight-live-status');
+    
+    flights.forEach(flight => {
+        const id = flight.id.split('-')[1]; // 取得 br10
+        const depTime = new Date(flight.getAttribute('data-dep')).getTime();
+        const arrTime = new Date(flight.getAttribute('data-arr')).getTime();
+        const now = new Date().getTime();
+        
+        const totalDuration = arrTime - depTime;
+        const elapsed = now - depTime;
+        const progress = (elapsed / totalDuration) * 100;
+        
+        const fill = document.getElementById(`fill-${id}`);
+        const plane = document.getElementById(`plane-${id}`);
+        const tag = document.getElementById(`status-tag-${id}`);
+        const elapsedTxt = document.getElementById(`time-elapsed-${id}`);
+        const remainingTxt = document.getElementById(`time-remaining-${id}`);
+
+        if (now < depTime) {
+            // 尚未起飛
+            fill.style.width = "0%";
+            plane.style.left = "0%";
+            elapsedTxt.innerText = "尚未起飛";
+        } else if (now > arrTime) {
+            // 已抵達
+            fill.style.width = "100%";
+            plane.style.left = "100%";
+            tag.innerText = "已抵達";
+            tag.style.display = "inline-block";
+            tag.style.background = "#64748b";
+            elapsedTxt.innerText = "航程結束";
+        } else {
+            // 飛行中
+            const percent = Math.min(Math.max(progress, 0), 100).toFixed(2);
+            fill.style.width = percent + "%";
+            plane.style.left = percent + "%";
+            tag.style.display = "inline-block";
+            
+            // 計算剩餘時間
+            const remainMin = Math.round((arrTime - now) / 60000);
+            const h = Math.floor(remainMin / 60);
+            const m = remainMin % 60;
+            
+            elapsedTxt.innerText = `已飛行 ${Math.round(progress)}%`;
+            remainingTxt.innerText = `剩餘約 ${h}時${m}分抵達`;
+        }
+    });
+}
+
+// 每分鐘更新一次
+setInterval(updateFlightProgress, 60000);
+// 網頁載入後立即執行一次
+updateFlightProgress();
 </script>
 
 </body>
