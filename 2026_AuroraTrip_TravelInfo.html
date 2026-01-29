@@ -539,21 +539,23 @@
 		}		
 		/* --- 航班追蹤按鈕樣式 --- */
 		.track-btn {
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			gap: 8px;
-			background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); /* 專業的航空藍漸層 */
-			color: white;
-			text-decoration: none;
-			padding: 8px 16px;
-			border-radius: 20px;
-			font-size: 0.85rem;
-			font-weight: 600;
-			margin-top: 12px;
-			transition: all 0.3s ease;
-			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-			border: none;
+		    display: flex;             /* 改為 flex 佈局 */
+		    margin: 12px auto 0 auto;  /* 上方保留 12px，左右自動調整達成置中 */
+		    width: fit-content;        /* 寬度隨內容調整，這是置中的關鍵 */
+		    
+		    align-items: center;
+		    justify-content: center;
+		    gap: 8px;
+		    background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+		    color: white;
+		    text-decoration: none;
+		    padding: 8px 16px;
+		    border-radius: 20px;
+		    font-size: 0.85rem;
+		    font-weight: 600;
+		    transition: all 0.3s ease;
+		    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+		    border: none;
 		}
 
 		.track-btn:hover {
@@ -1613,4 +1615,5 @@
 </body>
 
 </html>
+
 
