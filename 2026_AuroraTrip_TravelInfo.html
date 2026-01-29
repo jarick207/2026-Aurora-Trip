@@ -620,6 +620,52 @@
 			margin-bottom: 5px;
 			display: inline-block;
 		}
+		/* --- 世界時鐘樣式 --- */
+		.world-clock-section {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 10px;
+			margin: 15px 0;
+			padding: 0 10px;
+		}
+
+		.clock-card {
+			background: rgba(30, 41, 59, 0.7);
+			border: 1px solid rgba(56, 189, 248, 0.3);
+			border-radius: 12px;
+			padding: 10px 5px;
+			text-align: center;
+			backdrop-filter: blur(5px);
+		}
+
+		.clock-label {
+			font-size: 0.75rem;
+			color: var(--accent); /* 極光藍 */
+			font-weight: bold;
+			margin-bottom: 4px;
+			display: block;
+		}
+
+		.clock-time {
+			font-size: 1.1rem; /* 稍微縮小一點點，確保加上秒數後不換行 */
+			font-family: 'Courier New', Courier, monospace;
+			font-weight: 700;
+			color: var(--highlight);
+			display: block;
+			margin: 2px 0;
+		}
+
+		.clock-date {
+			font-size: 0.65rem;
+			color: var(--text-sub);
+			display: block;
+			margin-top: 2px;
+		}
+
+		/* 手機版自動調整比例 */
+		@media (max-width: 480px) {
+			.clock-time { font-size: 1.1rem; }
+		}	
     </style>
 </head>
 <body>
@@ -643,6 +689,23 @@
         <div style="font-size: 0.8rem; color: var(--text-sub); margin-top: 5px;">
             Target: 2026/02/11
         </div>
+    </div>
+</div>
+<div class="world-clock-section">
+    <div class="clock-card">
+        <span class="clock-label">台灣 (TWN)</span>
+        <span class="clock-time" id="time-tpe">--:--</span>
+        <span class="clock-date" id="date-tpe">----</span>
+    </div>
+    <div class="clock-card">
+        <span class="clock-label">溫哥華 (YVR)</span>
+        <span class="clock-time" id="time-yvr">--:--</span>
+        <span class="clock-date" id="date-yvr">----</span>
+    </div>
+    <div class="clock-card">
+        <span class="clock-label">白馬 (YXY)</span>
+        <span class="clock-time" id="time-yxy">--:--</span>
+        <span class="clock-date" id="date-yxy">----</span>
     </div>
 </div>
 
@@ -1453,61 +1516,98 @@
             }
         });
     });
-	function updateFlightProgress() {
-    // 找出所有帶有 flight-live-status 的區塊
-    const flights = document.querySelectorAll('.flight-live-status');
-    
-    flights.forEach(flight => {
-        const id = flight.id.split('-')[1]; // 取得 br10
-        const depTime = new Date(flight.getAttribute('data-dep')).getTime();
-        const arrTime = new Date(flight.getAttribute('data-arr')).getTime();
-        const now = new Date().getTime();
-        
-        const totalDuration = arrTime - depTime;
-        const elapsed = now - depTime;
-        const progress = (elapsed / totalDuration) * 100;
-        
-        const fill = document.getElementById(`fill-${id}`);
-        const plane = document.getElementById(`plane-${id}`);
-        const tag = document.getElementById(`status-tag-${id}`);
-        const elapsedTxt = document.getElementById(`time-elapsed-${id}`);
-        const remainingTxt = document.getElementById(`time-remaining-${id}`);
+		function updateFlightProgress() {
+		// 找出所有帶有 flight-live-status 的區塊
+		const flights = document.querySelectorAll('.flight-live-status');
+		
+		flights.forEach(flight => {
+			const id = flight.id.split('-')[1]; // 取得 br10
+			const depTime = new Date(flight.getAttribute('data-dep')).getTime();
+			const arrTime = new Date(flight.getAttribute('data-arr')).getTime();
+			const now = new Date().getTime();
+			
+			const totalDuration = arrTime - depTime;
+			const elapsed = now - depTime;
+			const progress = (elapsed / totalDuration) * 100;
+			
+			const fill = document.getElementById(`fill-${id}`);
+			const plane = document.getElementById(`plane-${id}`);
+			const tag = document.getElementById(`status-tag-${id}`);
+			const elapsedTxt = document.getElementById(`time-elapsed-${id}`);
+			const remainingTxt = document.getElementById(`time-remaining-${id}`);
 
-        if (now < depTime) {
-            // 尚未起飛
-            fill.style.width = "0%";
-            plane.style.left = "0%";
-            elapsedTxt.innerText = "尚未起飛";
-        } else if (now > arrTime) {
-            // 已抵達
-            fill.style.width = "100%";
-            plane.style.left = "100%";
-            tag.innerText = "已抵達";
-            tag.style.display = "inline-block";
-            tag.style.background = "#64748b";
-            elapsedTxt.innerText = "航程結束";
-        } else {
-            // 飛行中
-            const percent = Math.min(Math.max(progress, 0), 100).toFixed(2);
-            fill.style.width = percent + "%";
-            plane.style.left = percent + "%";
-            tag.style.display = "inline-block";
-            
-            // 計算剩餘時間
-            const remainMin = Math.round((arrTime - now) / 60000);
-            const h = Math.floor(remainMin / 60);
-            const m = remainMin % 60;
-            
-            elapsedTxt.innerText = `已飛行 ${Math.round(progress)}%`;
-            remainingTxt.innerText = `剩餘約 ${h}時${m}分抵達`;
-        }
-    });
-}
+			if (now < depTime) {
+				// 尚未起飛
+				fill.style.width = "0%";
+				plane.style.left = "0%";
+				elapsedTxt.innerText = "尚未起飛";
+			} else if (now > arrTime) {
+				// 已抵達
+				fill.style.width = "100%";
+				plane.style.left = "100%";
+				tag.innerText = "已抵達";
+				tag.style.display = "inline-block";
+				tag.style.background = "#64748b";
+				elapsedTxt.innerText = "航程結束";
+			} else {
+				// 飛行中
+				const percent = Math.min(Math.max(progress, 0), 100).toFixed(2);
+				fill.style.width = percent + "%";
+				plane.style.left = percent + "%";
+				tag.style.display = "inline-block";
+				
+				// 計算剩餘時間
+				const remainMin = Math.round((arrTime - now) / 60000);
+				const h = Math.floor(remainMin / 60);
+				const m = remainMin % 60;
+				
+				elapsedTxt.innerText = `已飛行 ${Math.round(progress)}%`;
+				remainingTxt.innerText = `剩餘約 ${h}時${m}分抵達`;
+			}
+		});
+	}
+		function updateWorldClocks() {
+			const locations = [
+				{ id: 'tpe', tz: 'Asia/Taipei' },
+				{ id: 'yvr', tz: 'America/Vancouver' },
+				{ id: 'yxy', tz: 'America/Whitehorse' }
+			];
 
-// 每分鐘更新一次
-setInterval(updateFlightProgress, 60000);
-// 網頁載入後立即執行一次
-updateFlightProgress();
+			locations.forEach(loc => {
+				const now = new Date();
+				
+				// 格式化時間：加入 second: '2-digit'
+				const timeStr = now.toLocaleTimeString('en-GB', { 
+					timeZone: loc.tz, 
+					hour: '2-digit', 
+					minute: '2-digit',
+					second: '2-digit', // 新增秒數
+					hour12: false 
+				});
+
+				// 格式化日期
+				const dateStr = now.toLocaleDateString('zh-TW', {
+					timeZone: loc.tz,
+					month: 'numeric',
+					day: 'numeric',
+					weekday: 'short'
+				});
+
+				const timeElem = document.getElementById(`time-${loc.id}`);
+				const dateElem = document.getElementById(`date-${loc.id}`);
+				
+				if(timeElem) timeElem.innerText = timeStr;
+				if(dateElem) dateElem.innerText = dateStr;
+			});
+		}
+
+		// 修改為每 1000 毫秒 (1秒) 更新一次，讓秒數會跳動
+		setInterval(updateWorldClocks, 1000);
+		updateWorldClocks();
+		// 每分鐘更新一次
+		setInterval(updateFlightProgress, 60000);
+		// 網頁載入後立即執行一次
+		updateFlightProgress();
 </script>
 
 </body>
