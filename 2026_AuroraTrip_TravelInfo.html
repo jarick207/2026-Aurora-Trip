@@ -757,9 +757,7 @@
                 <div class="flight-date">02/11</div>
                 <div class="time">15:50</div>
             </div>
-			<a href="javascript:void(0)" 
-			   onclick="openFlightTracker('KE2022')" 
-			   class="track-btn">
+			<a href="https://www.flightradar24.com/KE2022/" target="_blank" class="track-btn">
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 					<path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.7.5-1.1z"></path>
 				</svg>
@@ -1610,32 +1608,6 @@
 				if(dateElem) dateElem.innerText = dateStr;
 			});
 		}
-			function openFlightTracker(flightNo) {
-				const webUrl = "https://www.flightradar24.com/" + flightNo;
-				const appUrl = "fr24://" + flightNo; // Flightradar24 的 APP 喚起協議
-
-				// 偵測是否為行動裝置 (手機或平板)
-				const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-				if (isMobile) {
-					const start = Date.now();
-					
-					// 嘗試打開 APP
-					window.location.href = appUrl;
-
-					// 設定 1 秒後的檢查點
-					setTimeout(function() {
-						// 如果這段時間內沒有跳轉出去 (代表沒裝 APP)，則開啟瀏覽器網頁
-						// 這裡判斷時間差是否小於 1.5 秒 (若跳轉 APP，計時器會暫停)
-						if (Date.now() - start < 1500) {
-							window.open(webUrl, '_blank');
-						}
-					}, 1000);
-				} else {
-					// 電腦版直接開啟網頁
-					window.open(webUrl, '_blank');
-				}
-			}
 
 		// 修改為每 1000 毫秒 (1秒) 更新一次，讓秒數會跳動
 		setInterval(updateWorldClocks, 1000);
@@ -1649,7 +1621,6 @@
 </body>
 
 </html>
-
 
 
 
