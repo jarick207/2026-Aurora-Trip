@@ -1473,7 +1473,7 @@
 			const days = Math.floor(distance / (1000 * 60 * 60 * 24));
 			const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 			const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-			const secs = Math.floor((distance % (1000 * 60)) / 1000);
+			const secs = Math.floor((distance % (1000 * 60)) / 1000)+1;
 			// 手機版空間小，簡化文字
 			textElem.innerHTML = `倒數 ${String(days).padStart(2, '0')} 天 ${String(hours).padStart(2, '0')} 小時 ${String(mins).padStart(2, '0')} 分 ${String(secs).padStart(2, '0')} 秒`;
 			percentElem.innerHTML = Math.floor(percent) + "%";
@@ -1626,6 +1626,7 @@
 </body>
 
 </html>
+
 
 
 
